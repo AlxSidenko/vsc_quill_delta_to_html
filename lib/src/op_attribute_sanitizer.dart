@@ -272,12 +272,23 @@ class OpAttributeSanitizer {
     }
 
     for (var prop in colorAttrs) {
-      final val = dirtyAttrs[prop];
-      if (isTruthy(val) &&
-          (OpAttributeSanitizer.isValidHexColor(val.toString()) ||
-              OpAttributeSanitizer.isValidColorLiteral(val.toString()) ||
-              OpAttributeSanitizer.isValidRGBColor(val.toString()))) {
-        cleanAttrs[prop] = val;
+      final String? val = dirtyAttrs[prop];
+
+      if (isTruthy(val)) {
+        final bool isValidHex =
+            OpAttributeSanitizer.isValidHexColor(val.toString());
+        final bool isValidColorLiteral =
+            OpAttributeSanitizer.isValidColorLiteral(val.toString());
+        final bool isValidRGBColor =
+            OpAttributeSanitizer.isValidRGBColor(val.toString());
+
+        if (isValidHex || isValidColorLiteral || isValidRGBColor) {
+          if (isValidHex && val?.length == 9) {
+            cleanAttrs[prop] = val?.substring(2);
+          } else {
+            cleanAttrs[prop] = val;
+          }
+        }
       }
     }
 
@@ -366,7 +377,7 @@ class OpAttributeSanitizer {
   }
 
   static bool isValidHexColor(String colorStr) {
-    return RegExp(r'^#([0-9A-F]{6}|[0-9A-F]{3})$', caseSensitive: false)
+    return RegExp(r'^#([0-9A-F]{6}|[0-9A-F]{8}|[0-9A-F]{3})$', caseSensitive: false)
         .hasMatch(colorStr);
   }
 
