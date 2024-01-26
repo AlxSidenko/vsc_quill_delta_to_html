@@ -284,7 +284,7 @@ class OpAttributeSanitizer {
 
         if (isValidHex || isValidColorLiteral || isValidRGBColor) {
           if (isValidHex && val?.length == 9) {
-            cleanAttrs[prop] = val?.substring(2);
+            cleanAttrs[prop] = val?.substring(3);
           } else {
             cleanAttrs[prop] = val;
           }
