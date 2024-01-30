@@ -124,18 +124,18 @@ void main() {
       });
 
       test('should allow setting inline styles', () {
-        var op = DeltaInsertOp('f', OpAttributes(size: 'huge'));
+        var op = DeltaInsertOp('f', OpAttributes(size: 'small'));
         var c = OpToHtmlConverter(
             op,
             OpConverterOptions(
                 inlineStyles: InlineStyles(
               {
                 'size': InlineStyleType(map: {
-                  'huge': 'font-size: 6em',
+                  'small': 'font-size: 6px',
                 }),
               },
             )));
-        expect(c.getCssStyles(), ['font-size: 6em']);
+        expect(c.getCssStyles(), ['font-size: 6px']);
       });
 
       test(

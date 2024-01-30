@@ -300,7 +300,7 @@ class OpAttributeSanitizer {
     if (isTruthy(size) && OpAttributeSanitizer.isValidSize(size.toString())) {
       final doubleSize = double.tryParse(size!);
       if (doubleSize != null) {
-        cleanAttrs.size = 'font-size: ${doubleSize.floor()}em';
+        cleanAttrs.size = doubleSize.floor().toString();
       }
     }
 
