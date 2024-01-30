@@ -30,11 +30,9 @@ const Map<String, String> defaultInlineFonts = {
 final defaultInlineStyles = InlineStyles({
   'font': InlineStyleType(
       fn: (value, _) => defaultInlineFonts[value] ?? 'font-family:$value'),
-  'size': InlineStyleType(map: {
-    'small': 'font-size: 0.75em',
-    'large': 'font-size: 1.5em',
-    'huge': 'font-size: 2.5em',
-  }),
+  'size': InlineStyleType(
+      map: List.generate(200, (index) => index.toString())
+          .toMap((e) => MapEntry(e, 'font-size: ${e}px'))),
   'indent': InlineStyleType(fn: (value, op) {
     final indentSize = (double.tryParse(value) ?? double.nan) * 3;
     final side = op.attributes['direction'] == 'rtl' ? 'right' : 'left';
@@ -449,4 +447,13 @@ class OpToHtmlConverter {
               : arr.preferSecond(item)!;
     }).toList();
   }
+}
+
+extension MapFromList<Element> on List<Element> {
+  Map<Key, Element> toMap<Key>(
+          MapEntry<Key, Element> Function(Element e) getEntry) =>
+      Map.fromEntries(map(getEntry));
+
+  Map<Key, Element> toMapWhereKey<Key>(Key Function(Element e) getKey) =>
+      Map.fromEntries(map((e) => MapEntry(getKey(e), e)));
 }

@@ -300,7 +300,7 @@ class OpAttributeSanitizer {
     if (isTruthy(size) && OpAttributeSanitizer.isValidSize(size.toString())) {
       final doubleSize = double.tryParse(size!);
       if (doubleSize != null) {
-        cleanAttrs.size = 'large';
+        cleanAttrs.size = doubleSize.floor().toString();
       }
     }
 
