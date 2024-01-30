@@ -298,7 +298,10 @@ class OpAttributeSanitizer {
     }
 
     if (isTruthy(size) && OpAttributeSanitizer.isValidSize(size.toString())) {
-      cleanAttrs.size = size;
+      final doubleSize = double.tryParse(size!);
+      if (doubleSize != null) {
+        cleanAttrs.size = '${doubleSize.floor()}px';
+      }
     }
 
     if (isTruthy(width) &&
@@ -398,7 +401,7 @@ class OpAttributeSanitizer {
   }
 
   static bool isValidSize(String size) {
-    return RegExp(r'^[a-z0-9\-]{1,20}$', caseSensitive: false).hasMatch(size);
+    return RegExp(r'^[0-9.]+$', caseSensitive: false).hasMatch(size);
   }
 
   static bool isValidWidth(String width) {
