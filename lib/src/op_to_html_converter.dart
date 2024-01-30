@@ -32,7 +32,7 @@ final defaultInlineStyles = InlineStyles({
       fn: (value, _) => defaultInlineFonts[value] ?? 'font-family:$value'),
   'size': InlineStyleType(
       map: List.generate(200, (index) => index.toString())
-          .toMap((e) => MapEntry(e, 'font-size: ${e}px'))),
+          .toMap((e) => MapEntry(e, 'font-size:${e}px'))),
   'indent': InlineStyleType(fn: (value, op) {
     final indentSize = (double.tryParse(value) ?? double.nan) * 3;
     final side = op.attributes['direction'] == 'rtl' ? 'right' : 'left';
